@@ -1,6 +1,5 @@
 <h2>📝 My Notes</h2>
 
-<!-- Add / Edit Form -->
 <div class="note-form">
   <input [(ngModel)]="title" placeholder="Title" />
   <textarea [(ngModel)]="content" placeholder="Write something..."></textarea>
@@ -12,12 +11,18 @@
 
 <hr />
 
-<!-- Notes List -->
 <div *ngFor="let note of notes" class="note-card">
   <h3>{{note.title}}</h3>
   <p>{{note.content}}</p>
   <small>{{note.createdAt | date:'short'}}</small>
   <br />
+
   <button (click)="editNote(note)">Edit</button>
-  <button (click)="deleteNote(note.id)">Delete</button>
+  <button (click)="deleteNote(note)">Delete</button>
+  <button (click)="summarizeNote(note)">Summarize</button>
+
+  <div *ngIf="note.summary" class="note-summary">
+    <strong>Summary:</strong>
+    <p>{{note.summary}}</p>
+  </div>
 </div>

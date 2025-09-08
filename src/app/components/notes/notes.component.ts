@@ -1,40 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { NoteService } from '../../services/note.service';
-import { Note } from '../../models/note.model';
+import { Component } from '@angular/core';
+import { NoteService } from './../../services/note.service';
+import { Note } from 'src/app/models/note.model';
 
 @Component({
   selector: 'app-notes',
-  templateUrl: './notes.component.html'
+  templateUrl: './notes.component.html',
+  styleUrls: ['./notes.component.css']
 })
-export class NotesComponent implements OnInit {
-  notes: Note[] = [];
-  selectedNote: Note | null = null;
-
-  // form inputs
+export class NotesComponent {
   title = '';
   content = '';
+  selectedNote: Note | null = null;
 
-  constructor(private noteService: NoteService) {}
+  constructor(public noteService: NoteService) {} // make public to use in template
 
-  ngOnInit(): void {
-    this.loadNotes();
-  }
-
-  loadNotes() {
-    this.notes = this.noteService.getNotes();
+  get notes(): Note[] {
+    return this.noteService.getNotes();
   }
 
   addNote() {
-    if (this.title.trim() && this.content.trim()) {
-      this.noteService.addNote(this.title, this.content);
-      this.title = '';
-      this.content = '';
-      this.loadNotes();
-    }
+    this.noteService.addNote(this.title, this.content);
+    this.title = '';
+    this.content = '';
   }
 
   editNote(note: Note) {
-    this.selectedNote = { ...note }; // copy so editing doesn't affect directly
+    this.selectedNote = note;
     this.title = note.title;
     this.content = note.content;
   }
@@ -42,21 +33,21 @@ export class NotesComponent implements OnInit {
   updateNote() {
     if (this.selectedNote) {
       this.noteService.updateNote(this.selectedNote.id, this.title, this.content);
-      this.selectedNote = null;
-      this.title = '';
-      this.content = '';
-      this.loadNotes();
+      this.cancelEdit();
     }
-  }
-
-  deleteNote(id: number) {
-    this.noteService.deleteNote(id);
-    this.loadNotes();
   }
 
   cancelEdit() {
     this.selectedNote = null;
     this.title = '';
     this.content = '';
+  }
+
+  deleteNote(note: Note) {
+    this.noteService.deleteNote(note.id);
+  }
+
+  summarizeNote(note: Note) {
+    this.noteService.summarizeNote(note.id);
   }
 }
