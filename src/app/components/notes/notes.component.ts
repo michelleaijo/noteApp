@@ -7,7 +7,7 @@ import { Note } from '../../models/note.model';
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css']
 })
-export class NoteComponent implements OnInit {
+export class NotesComponent implements OnInit {
   notes: Note[] = [];
 
   constructor(private noteService: NoteService) {}
