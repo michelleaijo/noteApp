@@ -20,7 +20,8 @@ import { NoteSummaryComponent } from './components/note-summary/note-summary.com
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
