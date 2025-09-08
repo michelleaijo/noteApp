@@ -1,1 +1,5 @@
-<p>notes works!</p>
+<div *ngFor="let note of notes" class="note-card">
+  <h3>{{note.title}}</h3>
+  <p>{{note.content}}</p>
+  <button (click)="deleteNote(note.id)">Delete</button>
+</div>
